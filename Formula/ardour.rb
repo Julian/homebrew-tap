@@ -4,6 +4,7 @@ class Ardour < Formula
   url "https://community.ardour.org/srctar"
   version "5.12"
   sha256 "7e2a679b9a7eca7c72ec2fb9839b3e7d9e0049d83a8f9a1682788b5206fbd526"
+  head "https://github.com/Ardour/ardour"
 
   depends_on "aubio"
   depends_on "boost"
