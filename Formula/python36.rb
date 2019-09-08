@@ -2,6 +2,7 @@ class Python36 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
   url "https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz"
+  sha256 "47fc92a1dcb946b9ed0abc311d3767b7215c54e655b17fd1d3f9b538195525aa"
   revision 3
   head "https://github.com/python/cpython.git"
 
