@@ -2,6 +2,7 @@ class Python35 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
   url "https://www.python.org/ftp/python/3.5.7/Python-3.5.7.tgz"
+  sha256 "542d94920a2a06a471a73b51614805ad65366af98145b0369bc374cf248b521b"
   revision 3
   head "https://github.com/python/cpython.git"
 
@@ -153,8 +154,8 @@ class Python35 < Formula
     {
       "idle"          => "idle3",
       "pydoc"         => "pydoc3",
-      "python"        => "python3",
-      "python-config" => "python3-config",
+      "python"        => "python3.5",
+      "python-config" => "python3.5-config",
     }.each do |unversioned_name, versioned_name|
       (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
     end
@@ -191,7 +192,7 @@ class Python35 < Formula
 
     %w[setuptools pip wheel].each do |pkg|
       (libexec/pkg).cd do
-        system bin/"python3", "-s", "setup.py", "--no-user-cfg", "install",
+        system bin/"python3.5", "-s", "setup.py", "--no-user-cfg", "install",
                "--force", "--verbose", "--install-scripts=#{bin}",
                "--install-lib=#{site_packages}",
                "--single-version-externally-managed",
@@ -212,7 +213,7 @@ class Python35 < Formula
     end
 
     # post_install happens after link
-    %W[pip3 pip#{xy} easy_install-#{xy} wheel3].each do |e|
+    %W[pip#{xy} easy_install-#{xy}].each do |e|
       (HOMEBREW_PREFIX/"bin").install_symlink bin/e
     end
 
@@ -284,7 +285,7 @@ class Python35 < Formula
     end
     <<~EOS
       Python has been installed as
-        #{HOMEBREW_PREFIX}/bin/python3
+        #{HOMEBREW_PREFIX}/bin/python3.5
 
       Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
       `python3`, `python3-config`, `pip3` etc., respectively, have been installed into
