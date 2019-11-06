@@ -201,7 +201,8 @@ class Python36 < Formula
     end
 
     rm_rf [bin/"pip", bin/"easy_install"]
-    mv bin/"wheel", bin/"wheel3"
+    mv bin/"2to3", bin/"2to3.6"
+    mv bin/"wheel", bin/"wheel3.6"
 
     # Install unversioned symlinks in libexec/bin.
     {
