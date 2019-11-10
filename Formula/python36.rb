@@ -149,15 +149,16 @@ class Python36 < Formula
       (libexec/r).install resource(r)
     end
 
-    # Install unversioned symlinks in libexec/bin.
-    {
-      "idle"          => "idle3.6",
-      "pydoc"         => "pydoc3.6",
-      "python"        => "python3.6",
-      "python-config" => "python3.6-config",
-    }.each do |unversioned_name, versioned_name|
-      (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
-    end
+    [
+      "2to3",
+      "idle3",
+      "pydoc3",
+      "python3",
+      "python3-config",
+      "pyvenv",
+    ].each { |f| rm(bin/f) }
+    rm lib/"pkgconfig"/"python3.pc"
+    rm man1/"python3.1"
   end
 
   def post_install
@@ -199,23 +200,7 @@ class Python36 < Formula
       end
     end
 
-    rm_rf [bin/"pip", bin/"easy_install"]
-    mv bin/"2to3", bin/"2to3.6"
-    mv bin/"wheel", bin/"wheel3.6"
-
-    # Install unversioned symlinks in libexec/bin.
-    {
-      "easy_install" => "easy_install-#{xy}",
-      "pip"          => "pip3",
-      "wheel"        => "wheel3",
-    }.each do |unversioned_name, versioned_name|
-      (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
-    end
-
-    # post_install happens after link
-    %W[pip#{xy} easy_install-#{xy}].each do |e|
-      (HOMEBREW_PREFIX/"bin").install_symlink bin/e
-    end
+    rm_rf [bin/"pip", bin/"pip3", bin/"easy_install", bin/"wheel"]
 
     # Help distutils find brewed stuff when building extensions
     include_dirs = [HOMEBREW_PREFIX/"include", Formula["openssl@1.1"].opt_include,
