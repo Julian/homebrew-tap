@@ -1,0 +1,22 @@
+name: Bottle
+
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Build bottles
+      run: brew install --build-bottle julian/tap/python36
+
+    - name: Extract bottles
+      run: brew bottle julian/tap/python36
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: Bottles
+        path: .
