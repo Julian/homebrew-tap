@@ -3,7 +3,6 @@ class Python35 < Formula
   homepage "https://www.python.org/"
   url "https://www.python.org/ftp/python/3.5.7/Python-3.5.7.tgz"
   sha256 "542d94920a2a06a471a73b51614805ad65366af98145b0369bc374cf248b521b"
-  revision 3
   head "https://github.com/python/cpython.git"
 
   # setuptools remembers the build flags python is built with and uses them to
@@ -19,7 +18,7 @@ class Python35 < Formula
 
   depends_on "pkg-config" => :build
   depends_on "gdbm"
-  depends_on "openssl"
+  depends_on "openssl@1.1"
   depends_on "readline"
   depends_on "sqlite"
   depends_on "xz"
@@ -28,18 +27,18 @@ class Python35 < Formula
   skip_clean "bin/easy_install3", "bin/easy_install-3.4", "bin/easy_install-3.5", "bin/easy_install-3.6", "bin/easy_install-3.7"
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/1d/64/a18a487b4391a05b9c7f938b94a16d80305bf0369c6b0b9509e86165e1d3/setuptools-41.0.1.zip"
-    sha256 "a222d126f5471598053c9a77f4b5d4f26eaa1f150ad6e01dcf1a42e185d05613"
+    url "https://files.pythonhosted.org/packages/11/0a/7f13ef5cd932a107cd4c0f3ebc9d831d9b78e1a0e8c98a098ca17b1d7d97/setuptools-41.6.0.zip"
+    sha256 "6afa61b391dcd16cb8890ec9f66cc4015a8a31a6e1c2b4e0c464514be1a3d722"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/93/ab/f86b61bef7ab14909bd7ec3cd2178feb0a1c86d451bc9bccd5a1aedcde5f/pip-19.1.1.tar.gz"
-    sha256 "44d3d7d3d30a1eb65c7e5ff1173cdf8f7467850605ac7cc3707b6064bddd0958"
+    url "https://files.pythonhosted.org/packages/ce/ea/9b445176a65ae4ba22dce1d93e4b5fe182f953df71a145f557cffaffc1bf/pip-19.3.1.tar.gz"
+    sha256 "21207d76c1031e517668898a6b46a9fb1501c7a4710ef5dfd6a40ad9e6757ea7"
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/1d/b0/f478e80aeace42fe251225a86752799174a94314c4a80ebfc5bf0ab1153a/wheel-0.33.4.tar.gz"
-    sha256 "62fcfa03d45b5b722539ccbc07b190e4bfff4bb9e3a4d470dd9f6a0981002565"
+    url "https://files.pythonhosted.org/packages/59/b0/11710a598e1e148fb7cbf9220fd2a0b82c98e94efbdecb299cb25e7f0b39/wheel-0.33.6.tar.gz"
+    sha256 "10c9da68765315ed98850f8e048347c3eb06dd81822dc2ab1d4fde9dc9702646"
   end
 
   def install
@@ -60,7 +59,7 @@ class Python35 < Formula
       --enable-loadable-sqlite-extensions
       --without-ensurepip
       --with-dtrace
-      --with-openssl=#{Formula["openssl"].opt_prefix}
+      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
     ]
 
     args << "--without-gcc" if ENV.compiler == :clang
@@ -150,15 +149,16 @@ class Python35 < Formula
       (libexec/r).install resource(r)
     end
 
-    # Install unversioned symlinks in libexec/bin.
-    {
-      "idle"          => "idle3",
-      "pydoc"         => "pydoc3",
-      "python"        => "python3.5",
-      "python-config" => "python3.5-config",
-    }.each do |unversioned_name, versioned_name|
-      (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
-    end
+    [
+      "2to3",
+      "idle3",
+      "pydoc3",
+      "python3",
+      "python3-config",
+      "pyvenv",
+    ].each { |f| rm(bin/f) }
+    rm lib/"pkgconfig"/"python3.pc"
+    rm man1/"python3.1"
   end
 
   def post_install
@@ -200,27 +200,12 @@ class Python35 < Formula
       end
     end
 
-    rm_rf [bin/"pip", bin/"easy_install"]
-    mv bin/"wheel", bin/"wheel3"
-
-    # Install unversioned symlinks in libexec/bin.
-    {
-      "easy_install" => "easy_install-#{xy}",
-      "pip"          => "pip3",
-      "wheel"        => "wheel3",
-    }.each do |unversioned_name, versioned_name|
-      (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
-    end
-
-    # post_install happens after link
-    %W[pip#{xy} easy_install-#{xy}].each do |e|
-      (HOMEBREW_PREFIX/"bin").install_symlink bin/e
-    end
+    rm_rf [bin/"pip", bin/"pip3", bin/"easy_install", bin/"wheel"]
 
     # Help distutils find brewed stuff when building extensions
-    include_dirs = [HOMEBREW_PREFIX/"include", Formula["openssl"].opt_include,
+    include_dirs = [HOMEBREW_PREFIX/"include", Formula["openssl@1.1"].opt_include,
                     Formula["sqlite"].opt_include]
-    library_dirs = [HOMEBREW_PREFIX/"lib", Formula["openssl"].opt_lib,
+    library_dirs = [HOMEBREW_PREFIX/"lib", Formula["openssl@1.1"].opt_lib,
                     Formula["sqlite"].opt_lib]
 
     cfg = prefix/"Frameworks/Python.framework/Versions/#{xy}/lib/python#{xy}/distutils/distutils.cfg"
