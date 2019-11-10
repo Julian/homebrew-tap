@@ -59,14 +59,13 @@ class Python35 < Formula
       --enable-loadable-sqlite-extensions
       --without-ensurepip
       --with-dtrace
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
     ]
 
     args << "--without-gcc" if ENV.compiler == :clang
 
     cflags   = []
-    ldflags  = []
-    cppflags = []
+    ldflags  = ["-L#{Formula["openssl@1.1"].lib}"]
+    cppflags = ["-I#{Formula["openssl@1.1"].include}"]
 
     if MacOS.sdk_path_if_needed
       # Help Python's build system (setuptools/pip) to build things on SDK-based systems
