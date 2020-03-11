@@ -1,8 +1,8 @@
 class Python35 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.5.7/Python-3.5.7.tgz"
-  sha256 "542d94920a2a06a471a73b51614805ad65366af98145b0369bc374cf248b521b"
+  url "https://www.python.org/ftp/python/3.5.9/Python-3.5.9.tgz"
+  sha256 "67a1d4fc6e4540d6a092cadc488e533afa961b3c9becc74dc3d6b55cb56e0cc1"
   head "https://github.com/python/cpython.git"
 
   # setuptools remembers the build flags python is built with and uses them to

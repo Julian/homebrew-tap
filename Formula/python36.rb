@@ -1,8 +1,8 @@
 class Python36 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz"
-  sha256 "47fc92a1dcb946b9ed0abc311d3767b7215c54e655b17fd1d3f9b538195525aa"
+  url "https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tgz"
+  sha256 "7034dd7cba98d4f94c74f9edd7345bac71c8814c41672c64d9044fa2f96f334d"
   head "https://github.com/python/cpython.git"
 
   # setuptools remembers the build flags python is built with and uses them to
