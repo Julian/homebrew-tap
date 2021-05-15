@@ -5,7 +5,6 @@ class XcbProto < Formula
   sha256 "7b98721e669be80284e9bbfeab02d2d0d54cd11172b72271e47a2fe875e2bde1"
 
   depends_on "pkg-config" => :build
-  depends_on :x11
 
   def install
     system "./configure", "--disable-debug",

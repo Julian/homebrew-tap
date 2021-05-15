@@ -5,7 +5,6 @@ class XcbUtilXrm < Formula
   sha256 "0129f74c327ae65e2f4ad4002f300b4f02c9aff78c00997f1f1c5a430f922f34"
 
   depends_on "pkg-config" => :build
-  depends_on :x11
 
   def install
     system "./configure", "--disable-debug",
