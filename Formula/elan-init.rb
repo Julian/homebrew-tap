@@ -7,7 +7,7 @@ class ElanInit < Formula
   head "https://github.com/leanprover/elan.git"
 
   # elan-init will run on arm64 Macs, but will fetch Leans that are x86_64.
-  # depends_on arch: :x86_64
+  depends_on arch: :x86_64
   depends_on "rust" => :build
 
   def install
