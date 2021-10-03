@@ -17,7 +17,7 @@ class Lean < Formula
   def install
     mkdir "build/release" do
       system "cmake", "../..", *std_cmake_args
-      system "make", "-j#{ENV.make_jobs}", "install"
+      system "make", "MACOSX_DEPLOYMENT_TARGET=11.00", "-j#{ENV.make_jobs}", "install"
     end
   end
 
