@@ -1,4 +1,4 @@
-class Lean < Formula
+class LeanAT4 < Formula
   desc "Theorem Prover"
   homepage "https://leanprover.github.io/"
   url "https://github.com/leanprover/lean4/archive/v4.0.0-m2.tar.gz"
