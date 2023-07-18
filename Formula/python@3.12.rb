@@ -279,22 +279,6 @@ class PythonAT312 < Formula
                                             "."
     end
 
-    # Replace bundled setuptools/pip with our own.
-    rm lib_cellar.glob("ensurepip/_bundled/{setuptools,pip}-*.whl")
-    %w[setuptools pip].each do |r|
-      resource(r).stage do
-        system whl_build/"bin/pip3", "wheel", *common_pip_args,
-                                              "--wheel-dir=#{lib_cellar}/ensurepip/_bundled",
-                                              "."
-      end
-    end
-
-    # Patch ensurepip to bootstrap our updated versions of setuptools/pip
-    inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{resource("setuptools").version}\"")
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
-    end
-
     # Write out sitecustomize.py
     (lib_cellar/"sitecustomize.py").atomic_write(sitecustomize)
 
