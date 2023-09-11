@@ -1,9 +1,9 @@
 class Ardour < Formula
   desc "A digital audio workstation"
   homepage "https://ardour.org/"
-  url "https://community.ardour.org/srctar"
-  version "6.6"
-  sha256 "15beaac5278e5b911913cd36b8284e8b8a3d8968ede37b82dc3faea3660904d0"
+  url "https://community.ardour.org/download"
+  version "7"
+  sha256 "f536179fbef475c4c7eb1c2113d936c0b140d6f06a2c0d6f1611adb86553dddb"
   head "https://github.com/Ardour/ardour.git"
 
   depends_on "aubio"
