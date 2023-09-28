@@ -11,6 +11,9 @@ class Fortune < Formula
     regex(/href=.*?fortune-mod[._-]v?(\d+(?:\.\d+)*)\.t/i)
   end
 
+
+  patch :DATA
+
   def install
     ENV.deparallelize
 
