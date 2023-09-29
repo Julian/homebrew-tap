@@ -1,8 +1,8 @@
 class LeanAT4 < Formula
   desc "Theorem Prover"
   homepage "https://leanprover.github.io/"
-  url "https://github.com/leanprover/lean4/releases/tag/v4.2.0-rc1"
-  sha256 "80c0edde15ce7b29f6ae3ab76de18f9e3605354dec0f9e1d6ae19cbdf1ccd658"
+  url "https://github.com/leanprover/lean4/archive/refs/tags/v4.2.0-rc1.tar.gz"
+  sha256 "1f1124d05b9c3681f54c1c316db13986895bb87db7b08e9add2d027b188b21f0"
   license "Apache-2.0"
   head "https://github.com/leanprover/lean4.git"
 
