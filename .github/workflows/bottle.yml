@@ -10,10 +10,10 @@ jobs:
     runs-on: macos-latest
     steps:
     - name: Build bottles
-      run: brew install --build-bottle julian/tap/python36
+      run: brew install --build-bottle julian/tap/fortune
 
     - name: Extract bottles
-      run: brew bottle julian/tap/python36
+      run: brew bottle julian/tap/fortune
 
     - name: Upload artifacts
       uses: actions/upload-artifact@master
